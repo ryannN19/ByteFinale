@@ -1,0 +1,450 @@
+<!--
+  ============================================================
+  BYTE FINALE — HOW TO UPDATE TASKS
+  ============================================================
+  1. Press Ctrl+F (or Cmd+F on Mac) and search for: EDIT TASKS HERE
+  2. Update each box's task name, headcount, location, and type.
+  3. Save this file.
+  4. Re-upload it to Netlify (drag and drop onto your Netlify project page).
+  That's it — nothing else in this file needs to be touched.
+  ============================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Byte Finale</title>
+  <style>
+    @font-face {
+      font-family: 'Press Start 2P';
+      src: url('https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2');
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #a3cbe7;
+      background-image:
+        repeating-linear-gradient(to bottom, transparent, transparent 34px, rgba(21, 83, 156, 0.18) 35px),
+        linear-gradient(180deg, #b7d7ef 0%, #a3cbe7 40%, #8fbde0 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 24px 14px 48px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .margin-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 34px;
+      width: 2px;
+      background: rgba(178, 60, 60, 0.25);
+    }
+
+    .wrap {
+      max-width: 420px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .starburst {
+      position: absolute;
+      top: -18px;
+      right: -6px;
+      width: 88px;
+      height: 88px;
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      padding: 22px 10px 18px;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: #15539c;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 3px;
+      transform: rotate(-2deg);
+      margin-bottom: 14px;
+      box-shadow: 2px 2px 0 rgba(21, 83, 156, 0.35);
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #6a3b28;
+      margin: 0;
+      letter-spacing: -1px;
+      text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    h1 .finale {
+      color: #15539c;
+    }
+
+    .subtext {
+      font-size: 13px;
+      color: #2c5a86;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .box {
+      aspect-ratio: 1 / 1;
+      background: #f6f4ec;
+      border: 2px solid #15539c;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 rgba(21, 83, 156, 0.3);
+      padding: 2px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .box:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 rgba(21, 83, 156, 0.3);
+    }
+
+    .box.mixed {
+      background: #eaf6ff;
+      border-color: #38b6ff;
+    }
+
+    .box-count {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 13px;
+      color: #15539c;
+      line-height: 1.2;
+    }
+
+    .box-unit {
+      font-size: 8px;
+      color: #6489b6;
+      font-weight: 700;
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 11px;
+      color: #2c5a86;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      border: 2px solid #15539c;
+      background: #f6f4ec;
+    }
+
+    .legend-swatch.mixed {
+      border-color: #38b6ff;
+      background: #eaf6ff;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 11px;
+      color: #3d6690;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer .brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: #6a3b28;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 100vh;
+      background: rgba(21, 40, 66, 0.55);
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #fdfbf5;
+      border: 3px solid #38b6ff;
+      border-radius: 8px;
+      max-width: 320px;
+      width: 100%;
+      padding: 20px 20px 18px;
+      position: relative;
+      box-shadow: 5px 5px 0 rgba(21, 83, 156, 0.4);
+    }
+
+    .modal-tag {
+      display: inline-block;
+      background: #38b6ff;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+      transform: rotate(-2deg);
+      margin-bottom: 12px;
+    }
+
+    .modal-tag.mixed {
+      background: #15539c;
+    }
+
+    .modal-task {
+      font-size: 17px;
+      font-weight: 700;
+      color: #2c2c2a;
+      margin: 0 0 12px;
+      line-height: 1.35;
+    }
+
+    .modal-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 6px 0;
+      border-top: 1px dashed #b8c9dc;
+      font-size: 13px;
+    }
+
+    .modal-row:first-of-type {
+      border-top: none;
+    }
+
+    .modal-label {
+      color: #6489b6;
+      font-weight: 700;
+      min-width: 78px;
+      flex-shrink: 0;
+    }
+
+    .modal-value {
+      color: #15539c;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #15539c;
+      color: #ffffff;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="margin-line"></div>
+  <div class="wrap">
+    <svg class="starburst" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="50,0 58,38 96,32 64,54 80,90 50,68 20,90 36,54 4,32 42,38" fill="#5c8fc4" opacity="0.55" />
+    </svg>
+
+    <header>
+      <span class="eyebrow">closing session</span>
+      <h1>byte<span class="finale"> finale</span></h1>
+      <p class="subtext">Tap a box to view the task</p>
+    </header>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch"></span>Same team</div>
+      <div class="legend-item"><span class="legend-swatch mixed"></span>Mixed teams</div>
+    </div>
+
+    <footer>
+      <span class="brand">byte buddies</span>
+      presented to you by SOIT Monash Malaysia
+    </footer>
+
+    <div class="overlay" id="overlay">
+      <div class="modal" id="modal"></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    //  EDIT TASKS HERE
+    //  Update the 25 boxes below with real task details once decided.
+    //  headcount: minimum number of people needed to complete the task
+    //             (shown on the box itself, e.g. "3" means 3 or more)
+    //  task: the challenge description
+    //  location: where on campus the task takes place
+    //  mixed: true if members from different teams can combine to
+    //          meet the headcount, false if same-team only
+    // ============================================================
+
+    const tasks = [
+      // Box 1 (Row 1, Col 1)
+      { headcount: "3", task: "Placeholder task 1 — details coming soon", location: "Library Steps", mixed: false },
+      // Box 2 (Row 1, Col 2)
+      { headcount: "5", task: "Placeholder task 2 — details coming soon", location: "Sky Terrace", mixed: false },
+      // Box 3 (Row 1, Col 3)
+      { headcount: "4", task: "Placeholder task 3 — details coming soon", location: "Campus Green", mixed: false },
+      // Box 4 (Row 1, Col 4)
+      { headcount: "8", task: "Placeholder task 4 — details coming soon", location: "Block A Lobby", mixed: true },
+      // Box 5 (Row 1, Col 5)
+      { headcount: "6", task: "Placeholder task 5 — details coming soon", location: "Cafeteria", mixed: false },
+
+      // Box 6 (Row 2, Col 1)
+      { headcount: "8", task: "Placeholder task 6 — details coming soon", location: "Sky Terrace", mixed: true },
+      // Box 7 (Row 2, Col 2)
+      { headcount: "6", task: "Placeholder task 7 — details coming soon", location: "Library Steps", mixed: false },
+      // Box 8 (Row 2, Col 3)
+      { headcount: "3", task: "Placeholder task 8 — details coming soon", location: "Badminton Court Foyer", mixed: false },
+      // Box 9 (Row 2, Col 4)
+      { headcount: "5", task: "Placeholder task 9 — details coming soon", location: "Block B Corridor", mixed: false },
+      // Box 10 (Row 2, Col 5)
+      { headcount: "4", task: "Placeholder task 10 — details coming soon", location: "Campus Green", mixed: false },
+
+      // Box 11 (Row 3, Col 1)
+      { headcount: "5", task: "Placeholder task 11 — details coming soon", location: "Cafeteria", mixed: false },
+      // Box 12 (Row 3, Col 2)
+      { headcount: "4", task: "Placeholder task 12 — details coming soon", location: "Sky Terrace", mixed: false },
+      // Box 13 (Row 3, Col 3 — CENTER, hardest box, sits on both diagonals)
+      { headcount: "8", task: "Placeholder task 13 — details coming soon", location: "Block A Lobby", mixed: true },
+      // Box 14 (Row 3, Col 4)
+      { headcount: "6", task: "Placeholder task 14 — details coming soon", location: "Library Steps", mixed: false },
+      // Box 15 (Row 3, Col 5)
+      { headcount: "3", task: "Placeholder task 15 — details coming soon", location: "Campus Green", mixed: false },
+
+      // Box 16 (Row 4, Col 1)
+      { headcount: "6", task: "Placeholder task 16 — details coming soon", location: "Block B Corridor", mixed: false },
+      // Box 17 (Row 4, Col 2)
+      { headcount: "3", task: "Placeholder task 17 — details coming soon", location: "Cafeteria", mixed: false },
+      // Box 18 (Row 4, Col 3)
+      { headcount: "5", task: "Placeholder task 18 — details coming soon", location: "Badminton Court Foyer", mixed: false },
+      // Box 19 (Row 4, Col 4)
+      { headcount: "4", task: "Placeholder task 19 — details coming soon", location: "Sky Terrace", mixed: false },
+      // Box 20 (Row 4, Col 5)
+      { headcount: "8", task: "Placeholder task 20 — details coming soon", location: "Block A Lobby", mixed: true },
+
+      // Box 21 (Row 5, Col 1)
+      { headcount: "4", task: "Placeholder task 21 — details coming soon", location: "Campus Green", mixed: false },
+      // Box 22 (Row 5, Col 2)
+      { headcount: "8", task: "Placeholder task 22 — details coming soon", location: "Block B Corridor", mixed: true },
+      // Box 23 (Row 5, Col 3)
+      { headcount: "6", task: "Placeholder task 23 — details coming soon", location: "Cafeteria", mixed: false },
+      // Box 24 (Row 5, Col 4)
+      { headcount: "3", task: "Placeholder task 24 — details coming soon", location: "Badminton Court Foyer", mixed: false },
+      // Box 25 (Row 5, Col 5)
+      { headcount: "5", task: "Placeholder task 25 — details coming soon", location: "Sky Terrace", mixed: false }
+    ];
+
+    // ============================================================
+    //  STOP EDITING HERE — nothing below this line needs to change
+    // ============================================================
+
+    const grid = document.getElementById('grid');
+    const overlay = document.getElementById('overlay');
+    const modal = document.getElementById('modal');
+
+    tasks.forEach((t, i) => {
+      const box = document.createElement('div');
+      box.className = 'box' + (t.mixed ? ' mixed' : '');
+      box.innerHTML =
+        '<span class="box-count">' + t.headcount + '</span>' +
+        '<span class="box-unit">min. people</span>';
+      box.addEventListener('click', () => openModal(t));
+      grid.appendChild(box);
+    });
+
+    function openModal(t) {
+      const mixedNote = t.mixed
+        ? '<div class="modal-row"><span class="modal-label">Mixed rule</span><span class="modal-value">Min. 4 people from one team — 2 teams is enough to complete this</span></div>'
+        : '';
+      modal.innerHTML =
+        '<button class="modal-close" id="closeBtn" aria-label="Close">&#10005;</button>' +
+        '<div class="modal-tag' + (t.mixed ? ' mixed' : '') + '">' + (t.mixed ? 'mixed teams' : 'same team') + '</div>' +
+        '<p class="modal-task">' + t.task + '</p>' +
+        '<div class="modal-row"><span class="modal-label">Min. headcount</span><span class="modal-value">' + t.headcount + ' people</span></div>' +
+        '<div class="modal-row"><span class="modal-label">Location</span><span class="modal-value">' + t.location + '</span></div>' +
+        mixedNote;
+      overlay.classList.add('show');
+      document.getElementById('closeBtn').addEventListener('click', closeModal);
+    }
+
+    function closeModal() {
+      overlay.classList.remove('show');
+    }
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+  </script>
+</body>
+
+</html>
