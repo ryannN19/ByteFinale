@@ -107,6 +107,37 @@
       font-weight: 600;
     }
 
+    .grid-wrap {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .col-labels {
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .row-labels {
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .axis-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      color: #15539c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -318,7 +349,12 @@
       <p class="subtext">Tap a box to view the task</p>
     </header>
 
-    <div class="grid" id="grid"></div>
+    <div class="grid-wrap">
+      <div></div>
+      <div class="col-labels" id="colLabels"></div>
+      <div class="row-labels" id="rowLabels"></div>
+      <div class="grid" id="grid"></div>
+    </div>
 
     <div class="legend">
       <div class="legend-item"><span class="legend-swatch"></span>Same team</div>
@@ -407,6 +443,25 @@
     // ============================================================
     //  STOP EDITING HERE — nothing below this line needs to change
     // ============================================================
+
+    const colLetters = ['A', 'B', 'C', 'D', 'E'];
+    const rowLetters = ['v', 'w', 'x', 'y', 'z'];
+
+    const colLabelsEl = document.getElementById('colLabels');
+    colLetters.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'axis-label';
+      el.textContent = l;
+      colLabelsEl.appendChild(el);
+    });
+
+    const rowLabelsEl = document.getElementById('rowLabels');
+    rowLetters.forEach(l => {
+      const el = document.createElement('div');
+      el.className = 'axis-label';
+      el.textContent = l;
+      rowLabelsEl.appendChild(el);
+    });
 
     const grid = document.getElementById('grid');
     const overlay = document.getElementById('overlay');
