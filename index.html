@@ -464,7 +464,7 @@
     </div>
 
     <footer>
-      <span class="brand" id="adminTrigger">byte buddies</span>
+      <span class="brand">byte buddies</span>
       presented to you by SOIT Monash Malaysia
     </footer>
 
@@ -610,21 +610,19 @@
     });
 
     // ============================================================
-    //  45-MINUTE GAME TIMER — CONTROLLED BY CODE ONLY
-    //  There is no visible button. To start or end the timer,
-    //  tap the "byte buddies" logo in the footer 5 times quickly.
-    //  A prompt will ask for a code:
-    //    START_PIN  -> starts the 45-min countdown (once)
-    //    END_PIN    -> ends it early with the "3 winners" message
-    //  Change the two codes below to whatever you want.
+    //  45-MINUTE GAME TIMER — DATE-BASED, SYNCED ACROSS ALL PHONES
+    //  Everyone's page counts down toward the same real-world
+    //  clock time, so no "start button" or backend is needed —
+    //  every device independently agrees on the same countdown.
+    //
+    //  SEGMENT_START: when the Byte Finale segment begins.
+    //  The timer shows a static 45:00 until this moment, then
+    //  automatically starts counting down on every device at once.
     // ============================================================
-    const START_PIN = "2026";
-    const END_PIN = "0806";
-
+    const SEGMENT_START = new Date("2026-08-06T18:15:00+08:00");
     const TIMER_SECONDS = 45 * 60;
-    let remaining = TIMER_SECONDS;
-    let timerInterval = null;
-    let hasStarted = false;
+    const SEGMENT_END = new Date(SEGMENT_START.getTime() + TIMER_SECONDS * 1000);
+
     let hasEnded = false;
 
     const countdownLabel = document.getElementById('countdownLabel');
@@ -636,22 +634,36 @@
       return String(n).padStart(2, '0');
     }
 
-    function renderTimer() {
-      const mins = Math.floor(remaining / 60);
-      const secs = remaining % 60;
+    function renderTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
       cdMins.textContent = pad(mins);
       cdSecs.textContent = pad(secs);
     }
 
     function tick() {
-      remaining--;
-      if (remaining <= 0) {
-        remaining = 0;
-        renderTimer();
-        finishTimer("Time's up!!! Please return to Badminton Court!");
+      const now = new Date();
+
+      if (now < SEGMENT_START) {
+        countdownLabel.textContent = "Byte Finale starts at 6:15 PM";
+        renderTime(TIMER_SECONDS);
         return;
       }
-      renderTimer();
+
+      const remainingMs = SEGMENT_END - now;
+
+      if (remainingMs <= 0) {
+        renderTime(0);
+        if (!hasEnded) {
+          hasEnded = true;
+          finishTimer("Time's up!!! Please return to Badminton Court!");
+        }
+        return;
+      }
+
+      countdownLabel.textContent = "Byte Finale — time remaining";
+      countdownEl.classList.remove('done');
+      renderTime(Math.ceil(remainingMs / 1000));
     }
 
     const bigAlert = document.getElementById('bigAlert');
@@ -668,59 +680,14 @@
     });
 
     function finishTimer(message) {
-      clearInterval(timerInterval);
-      hasEnded = true;
+      clearInterval(mainInterval);
       countdownEl.classList.add('done');
       countdownLabel.textContent = message;
       showBigAlert(message);
     }
 
-    function startTimer() {
-      if (hasStarted) {
-        alert("Timer already started.");
-        return;
-      }
-      hasStarted = true;
-      remaining = TIMER_SECONDS;
-      renderTimer();
-      countdownLabel.textContent = "Byte Finale — time remaining";
-      countdownEl.classList.remove('done');
-      timerInterval = setInterval(tick, 1000);
-    }
-
-    function endTimerEarly() {
-      if (!hasStarted || hasEnded) {
-        alert("Nothing to end right now.");
-        return;
-      }
-      finishTimer("There are already 3 winner groups! Please return to Badminton Court!");
-    }
-
-    // Hidden 5-tap trigger on the footer logo
-    const adminTrigger = document.getElementById('adminTrigger');
-    let tapCount = 0;
-    let tapResetTimeout = null;
-
-    adminTrigger.addEventListener('click', () => {
-      tapCount++;
-      clearTimeout(tapResetTimeout);
-      tapResetTimeout = setTimeout(() => { tapCount = 0; }, 2000);
-
-      if (tapCount >= 5) {
-        tapCount = 0;
-        const entered = prompt("Enter code:");
-        if (entered === null) return;
-        if (entered === START_PIN) {
-          startTimer();
-        } else if (entered === END_PIN) {
-          endTimerEarly();
-        } else {
-          alert("Wrong code.");
-        }
-      }
-    });
-
-    renderTimer();
+    tick();
+    const mainInterval = setInterval(tick, 1000);
   </script>
 </body>
 
