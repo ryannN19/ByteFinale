@@ -186,6 +186,54 @@
       letter-spacing: 0.02em;
     }
 
+    .countdown {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 4px 0 20px;
+    }
+
+    .countdown-box {
+      background: #15539c;
+      border-radius: 4px;
+      padding: 8px 6px;
+      min-width: 52px;
+      text-align: center;
+      box-shadow: 2px 2px 0 rgba(21, 83, 156, 0.3);
+    }
+
+    .countdown-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 18px;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .countdown-unit {
+      font-size: 9px;
+      color: #cfe4f7;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .countdown-label {
+      text-align: center;
+      font-size: 12px;
+      color: #2c5a86;
+      font-weight: 700;
+      margin: -6px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .countdown.done .countdown-box {
+      background: #38b6ff;
+    }
+
     .legend {
       display: flex;
       justify-content: center;
@@ -233,6 +281,54 @@
       color: #6a3b28;
       display: block;
       margin-bottom: 6px;
+    }
+
+    .big-alert {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 100vh;
+      background: rgba(21, 40, 66, 0.75);
+      z-index: 20;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .big-alert.show {
+      display: flex;
+    }
+
+    .big-alert-box {
+      background: #15539c;
+      border: 4px solid #38b6ff;
+      border-radius: 10px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 6px 6px 0 rgba(21, 83, 156, 0.5);
+      max-width: 340px;
+    }
+
+    .big-alert-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 22px;
+      line-height: 1.5;
+      color: #ffffff;
+      margin: 0 0 20px;
+    }
+
+    .big-alert-close {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      background: #ffffff;
+      color: #15539c;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
     }
 
     .overlay {
@@ -349,6 +445,12 @@
       <p class="subtext">Tap a box to view the task</p>
     </header>
 
+    <p class="countdown-label" id="countdownLabel">Byte Finale — 45 min timer</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-box countdown-timer"><div class="countdown-num" id="cd-mins">45</div><div class="countdown-unit">min</div></div>
+      <div class="countdown-box countdown-timer"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-unit">sec</div></div>
+    </div>
+
     <div class="grid-wrap">
       <div></div>
       <div class="col-labels" id="colLabels"></div>
@@ -362,12 +464,19 @@
     </div>
 
     <footer>
-      <span class="brand">byte buddies</span>
+      <span class="brand" id="adminTrigger">byte buddies</span>
       presented to you by SOIT Monash Malaysia
     </footer>
 
     <div class="overlay" id="overlay">
       <div class="modal" id="modal"></div>
+    </div>
+
+    <div class="big-alert" id="bigAlert">
+      <div class="big-alert-box">
+        <p class="big-alert-text" id="bigAlertText"></p>
+        <button class="big-alert-close" id="bigAlertClose">OK</button>
+      </div>
     </div>
   </div>
 
@@ -499,6 +608,119 @@
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
+
+    // ============================================================
+    //  45-MINUTE GAME TIMER — CONTROLLED BY CODE ONLY
+    //  There is no visible button. To start or end the timer,
+    //  tap the "byte buddies" logo in the footer 5 times quickly.
+    //  A prompt will ask for a code:
+    //    START_PIN  -> starts the 45-min countdown (once)
+    //    END_PIN    -> ends it early with the "3 winners" message
+    //  Change the two codes below to whatever you want.
+    // ============================================================
+    const START_PIN = "2026";
+    const END_PIN = "0806";
+
+    const TIMER_SECONDS = 45 * 60;
+    let remaining = TIMER_SECONDS;
+    let timerInterval = null;
+    let hasStarted = false;
+    let hasEnded = false;
+
+    const countdownLabel = document.getElementById('countdownLabel');
+    const countdownEl = document.getElementById('countdown');
+    const cdMins = document.getElementById('cd-mins');
+    const cdSecs = document.getElementById('cd-secs');
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function renderTimer() {
+      const mins = Math.floor(remaining / 60);
+      const secs = remaining % 60;
+      cdMins.textContent = pad(mins);
+      cdSecs.textContent = pad(secs);
+    }
+
+    function tick() {
+      remaining--;
+      if (remaining <= 0) {
+        remaining = 0;
+        renderTimer();
+        finishTimer("Time's up!!! Please return to Badminton Court!");
+        return;
+      }
+      renderTimer();
+    }
+
+    const bigAlert = document.getElementById('bigAlert');
+    const bigAlertText = document.getElementById('bigAlertText');
+    const bigAlertClose = document.getElementById('bigAlertClose');
+
+    function showBigAlert(message) {
+      bigAlertText.textContent = message;
+      bigAlert.classList.add('show');
+    }
+
+    bigAlertClose.addEventListener('click', () => {
+      bigAlert.classList.remove('show');
+    });
+
+    function finishTimer(message) {
+      clearInterval(timerInterval);
+      hasEnded = true;
+      countdownEl.classList.add('done');
+      countdownLabel.textContent = message;
+      showBigAlert(message);
+    }
+
+    function startTimer() {
+      if (hasStarted) {
+        alert("Timer already started.");
+        return;
+      }
+      hasStarted = true;
+      remaining = TIMER_SECONDS;
+      renderTimer();
+      countdownLabel.textContent = "Byte Finale — time remaining";
+      countdownEl.classList.remove('done');
+      timerInterval = setInterval(tick, 1000);
+    }
+
+    function endTimerEarly() {
+      if (!hasStarted || hasEnded) {
+        alert("Nothing to end right now.");
+        return;
+      }
+      finishTimer("There are already 3 winner groups! Please return to Badminton Court!");
+    }
+
+    // Hidden 5-tap trigger on the footer logo
+    const adminTrigger = document.getElementById('adminTrigger');
+    let tapCount = 0;
+    let tapResetTimeout = null;
+
+    adminTrigger.addEventListener('click', () => {
+      tapCount++;
+      clearTimeout(tapResetTimeout);
+      tapResetTimeout = setTimeout(() => { tapCount = 0; }, 2000);
+
+      if (tapCount >= 5) {
+        tapCount = 0;
+        const entered = prompt("Enter code:");
+        if (entered === null) return;
+        if (entered === START_PIN) {
+          startTimer();
+        } else if (entered === END_PIN) {
+          endTimerEarly();
+        } else {
+          alert("Wrong code.");
+        }
+      }
+    });
+
+    renderTimer();
   </script>
 </body>
 
