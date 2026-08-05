@@ -392,6 +392,14 @@
       line-height: 1.35;
     }
 
+    .modal-task-body {
+      font-size: 13px;
+      font-weight: 400;
+      color: #2c2c2a;
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+
     .modal-image {
       width: 100%;
       border-radius: 6px;
@@ -511,8 +519,7 @@
 
     const tasks = [
       // Box 1 (Row 1, Col 1) — vA
-      { headcount: "N/A", task: "Webpage Hunt<br><br>Go to Student Hub, use a computer there, and click through any links on monash.edu until you reach the target page (picture shown below). Take a physical photo of the screen with your team present, then submit at the Marking Station.", location: "Student Hub", mixed: false, image: "webpage-hunt-clue.png" },
-      // Box 2 (Row 1, Col 2)
+      { headcount: "-", task: "Webpage Hunt</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Go to Student Hub, use a computer there, and click through any links on monash.edu until you reach the target page (picture shown below).</p><p class=\"modal-task-body\"><strong>Submission:</strong> Take a physical photo of the screen with your team present, then submit at the Marking Station.", location: "Student Hub", mixed: false, image: "webpage-hunt-clue.png" },      // Box 2 (Row 1, Col 2)
       { headcount: "5", task: "Placeholder task 2 — details coming soon", location: "Sky Terrace", mixed: false },
       // Box 3 (Row 1, Col 3)
       { headcount: "4", task: "Placeholder task 3 — details coming soon", location: "Campus Green", mixed: false },
