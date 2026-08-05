@@ -416,6 +416,21 @@
       border: 2px solid #b8c9dc;
     }
 
+    .modal-image-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 0 0 14px;
+    }
+    
+    .modal-image-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 2px solid #b8c9dc;
+    }
+
     .modal-row {
       display: flex;
       align-items: baseline;
@@ -535,27 +550,27 @@
       // Box 4 (Row 1, Col 4)
       { headcount: "8", task: "Hoop Duel</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Team up 4v4 with another team. Race through a hula hoop trail — when both teams meet at a hoop, settle it with rock-paper-scissors before continuing.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Complete the trail first to win. Only the winning team receives the prop token; the losing team does not.</p><p class=\"modal-task-reminder\"><strong>Reminder:</strong> This task can only be completed if two teams are present — a lone team cannot attempt it.", location: "Field", mixed: true },
       // Box 5 (Row 1, Col 5)
-      { headcount: "6", task: "Placeholder task 5 — details coming soon", location: "Cafeteria", mixed: false },
+      { headcount: "8", task: "Hoop Duel</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Team up 4v4 with another team. Race through a hula hoop trail — when both teams meet at a hoop, settle it with rock-paper-scissors before continuing.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Complete the trail first to win. Only the winning team receives the prop token; the losing team does not.</p><p class=\"modal-task-reminder\"><strong>Reminder:</strong> This task can only be completed if two teams are present — a lone team cannot attempt it.", location: "Field", mixed: true },
 
       // Box 6 (Row 2, Col 1)
-      { headcount: "8", task: "Placeholder task 6 — details coming soon", location: "Sky Terrace", mixed: true },
+      { headcount: "8", task: "Book Hunt</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Team up with another team. NPC will give both teams the same 3 book titles to find in the library. Race to be the first to correctly bring back 2 out of the 3 books — NPC will only tell you if each book is correct or incorrect.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Be the first team to correctly return 2 out of 3 books. Only the winning team receives the prop token; the losing team does not.</p><p class=\"modal-task-reminder\"><strong>Reminder:</strong> This task can only be completed if two teams are present — a lone team cannot attempt it.", location: "Library (L3 Discussion Zone)", mixed: true },
       // Box 7 (Row 2, Col 2)
-      { headcount: "6", task: "Placeholder task 7 — details coming soon", location: "Library Steps", mixed: false },
+      { headcount: "4", task: "Stranger Squad Photo</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Find another group of 4 random people/strangers anywhere on campus who are not part of any Byte Buddies team.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Take a group photo with your team together with the 4 strangers — both groups must be clearly visible in the same photo.", location: "Anywhere", mixed: false },
       // Box 8 (Row 2, Col 3)
-      { headcount: "3", task: "Placeholder task 8 — details coming soon", location: "Badminton Court Foyer", mixed: false },
+      { headcount: "-", task: "Algorithm Hunt</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Locate 3 code snippets written on the whiteboard at Lepak Place. Trace through each code and work out the correct output.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Take a photo of yourself with the whiteboard showing all 3 code snippets, then state the correct outputs at the Marking Station.", location: "Lepak Place", mixed: false },
       // Box 9 (Row 2, Col 4)
-      { headcount: "5", task: "Placeholder task 9 — details coming soon", location: "Block B Corridor", mixed: false },
+      { headcount: "-", task: "SOIT Subcomm Chameleon</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Search around LT4108 to locate 5 out of 8 SOIT subcomm cutouts placed around the area.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Take a photo with each of the 5 cutouts you find — your team must be visible in every photo, a photo of the cutout alone does not count. Submit all photos together as a set at the Marking Station.", location: "LT4108", mixed: false },
       // Box 10 (Row 2, Col 5)
-      { headcount: "4", task: "Placeholder task 10 — details coming soon", location: "Campus Green", mixed: false },
+      { headcount: "-", task: "Guess the Price</p><p class=\"modal-task-body\"><strong>Instruction:</strong> NPC will show you drinks one at a time, each from a different brand. For each drink, discuss with your team and give one final price guess as a group — no individual guessing. A guess is correct if it falls within RM1.00 of the actual price.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Get 3 correct guesses in total to pass and receive the prop token.", location: "Lepak Place", mixed: false },
 
       // Box 11 (Row 3, Col 1)
-      { headcount: "5", task: "Placeholder task 11 — details coming soon", location: "Cafeteria", mixed: false },
+      { headcount: "-", task: "Muted Moments</p><p class=\"modal-task-body\"><strong>Instruction:</strong> NPC will play short movie clips with the audio muted at a key line of dialogue. Discuss with your team and give one final guess as to what the muted line says.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Get 3 correct guesses in total to pass and receive the prop token.", location: "ALC 6427", mixed: false },
       // Box 12 (Row 3, Col 2)
-      { headcount: "4", task: "Placeholder task 12 — details coming soon", location: "Sky Terrace", mixed: false },
+      { headcount: "-", task: "UNO Memory Match</p><p class=\"modal-task-body\"><strong>Instruction:</strong> 16 UNO cards are laid face-down in a grid. Flip 2 cards at a time to find matching pairs (same number and color). If a match is found, the pair is kept aside; if not, both cards are flipped back face-down.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Match all 16 cards (8 pairs) within 1 minute to pass and receive the prop token.", location: "Student Lounge", mixed: false },
       // Box 13 (Row 3, Col 3 — CENTER, hardest box, sits on both diagonals)
-      { headcount: "8", task: "Placeholder task 13 — details coming soon", location: "Block A Lobby", mixed: true },
+      { headcount: "8", task: "Musical Chair</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Team up with another team. 8 players start with 7 seats. NPC plays music — when it stops, everyone finds a seat. Whoever is left standing is eliminated, and one more seat is removed each round.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Continue until every player from one team has been eliminated — the remaining team wins and receives the prop token.</p><p class=\"modal-task-reminder\"><strong>Reminder:</strong> This task can only be completed if two teams are present — a lone team cannot attempt it.", location: "Foyer", mixed: true },
       // Box 14 (Row 3, Col 4)
-      { headcount: "6", task: "Placeholder task 14 — details coming soon", location: "Library Steps", mixed: false },
+      { headcount: "4", task: "Human \"M-O-N-A-S-H\"</p><p class=\"modal-task-body\"><strong>Instruction:</strong> Pose across the Monash landmark letters (M-O-N-A-S-H) to form a coordinated group shot. Use the reference poses shown below for each letter.</p><p class=\"modal-task-body\"><strong>Submission:</strong> Take a photo showing at least 4 members, each clearly positioned at a different letter of the sign, then submit at the Marking Station.", location: "Monash Main Gate", mixed: false, images: ["M.jpg", "O.jpg", "N.jpg", "A.jpg", "S.jpg", "H.jpg"] },
       // Box 15 (Row 3, Col 5)
       { headcount: "3", task: "Placeholder task 15 — details coming soon", location: "Campus Green", mixed: false },
 
@@ -623,9 +638,11 @@
       const mixedNote = t.mixed
         ? '<div class="modal-row"><span class="modal-label">Mixed rule</span><span class="modal-value">Min. 4 people from one team — 2 teams is enough to complete this</span></div>'
         : '';
-      const imageBlock = t.image
-        ? '<img class="modal-image" src="' + t.image + '" alt="Task reference image">'
-        : '';
+      const imageBlock = t.images
+        ? '<div class="modal-image-grid">' + t.images.map(img => '<img src="' + img + '" alt="Task reference image">').join('') + '</div>'
+        : (t.image
+          ? '<img class="modal-image" src="' + t.image + '" alt="Task reference image">'
+          : '');
       modal.innerHTML =
         '<button class="modal-close" id="closeBtn" aria-label="Close">&#10005;</button>' +
         '<div class="modal-tag' + (t.mixed ? ' mixed' : '') + '">' + (t.mixed ? 'mixed teams' : 'same team') + '</div>' +
