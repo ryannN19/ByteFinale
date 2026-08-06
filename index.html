@@ -489,9 +489,9 @@
       <p class="subtext">Tap a box to view the task</p>
     </header>
 
-    <p class="countdown-label" id="countdownLabel">Byte Finale — 45 min timer</p>
+    <p class="countdown-label" id="countdownLabel">Byte Finale — 1 hour timer</p>
     <div class="countdown" id="countdown">
-      <div class="countdown-box countdown-timer"><div class="countdown-num" id="cd-mins">45</div><div class="countdown-unit">min</div></div>
+      <div class="countdown-box countdown-timer"><div class="countdown-num" id="cd-mins">60</div><div class="countdown-unit">min</div></div>
       <div class="countdown-box countdown-timer"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-unit">sec</div></div>
     </div>
 
@@ -674,7 +674,7 @@
     //  automatically starts counting down on every device at once.
     // ============================================================
     const SEGMENT_START = new Date("2026-08-06T18:15:00+08:00");
-    const TIMER_SECONDS = 45 * 60;
+    const TIMER_SECONDS = 60 * 60;
     const SEGMENT_END = new Date(SEGMENT_START.getTime() + TIMER_SECONDS * 1000);
 
     let hasEnded = false;
